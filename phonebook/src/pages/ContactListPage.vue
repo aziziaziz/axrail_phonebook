@@ -48,10 +48,14 @@ export default {
   font-size: 0.9em;
 
   > .contacts-group {
+    position: relative;
+
     > .grouping {
       padding: 5px;
       background-color: rgb(64,64,64,);
       color: white;
+      position: sticky;
+      top: 50px;
     }
 
     > .contacts {

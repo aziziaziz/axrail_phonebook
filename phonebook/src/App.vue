@@ -45,8 +45,9 @@ export default {
   }
 
   > .router {
-    padding: 10px;
+    padding: 0px 10px 10px 10px;
     align-self: center;
+    margin-top: 10px;
   }
 }
 
