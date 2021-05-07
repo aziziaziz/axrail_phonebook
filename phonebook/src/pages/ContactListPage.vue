@@ -10,15 +10,18 @@
     </div>
     <div v-else>
       <div class="contacts-group" v-for="(c, i) in $store.state.contactsListing" :key="i" :id="c['letter']">
-        <div class="grouping">{{ c['letter'] }}</div>
-        <div class="contacts" :class="[ (i + ci) % 2 == 0 ? 'even' : 'odd' ]" v-for="(con, ci) in c['contacts']" :key="ci">
+        <div class="grouping" v-if="c['contacts'].length > 0">{{ c['letter'] }}</div>
+        <div class="contacts" :class="[ (i + ci) % 2 == 0 ? 'even' : 'odd' ]" v-for="(con, ci) in c['contacts']" :key="ci"
+          @contextmenu="contactRightClicked($event, con, c['letter'])">
           <div class="name">{{ con['name'] }}</div>
           <div class="number">{{ con['number'] }}</div>
         </div>
       </div>
     </div>
     <div class="button-section">
-      <button v-for="(c, i) in $store.state.contactsListing" :key="i" @click="groupingClicked(c['letter'])">{{ c['letter'] }}</button>
+      <div v-for="(c, i) in $store.state.contactsListing" :key="i">
+        <button class="letter-button" v-if="c['contacts'].length > 0" @click="groupingClicked(c['letter'])">{{ c['letter'] }}</button>
+      </div>
     </div>
   </div>
 </template>
@@ -37,6 +40,41 @@ export default {
   methods: {
     groupingClicked: function(letter) {
       $(`#${letter}`)[0].scrollIntoView();
+    },
+    contactRightClicked: async function(e, item, letter) {
+      e.preventDefault();
+      
+      var deleteContact = await Swal.fire({
+        title: `Do you want to delete ${item['name']} from your contacts?`,
+        showCancelButton: true,
+        confirmButtonText: `Yes`,
+        cancelButtonText: `No`,
+        icon: 'warning'
+      });
+      
+      if (deleteContact['isConfirmed']) {
+        var deleted = await this.$axios.delete('/contacts', { data: item });
+        if (deleted.data['deleted']) {
+          Swal.fire(
+            'Contact Deleted',
+            `You've deleted ${item['name']} from your contacts list!`,
+            'success'
+          );
+
+          var contactLetter = this.$store.state.contactsListing.filter(c => c['letter'] == letter);
+          var index = contactLetter[0]['contacts'].indexOf(item);
+          contactLetter[0]['contacts'].splice(index, 1);
+
+          var rawIndex = this.$store.state.rawResult.indexOf(item);
+          this.$store.state.rawResult.splice(rawIndex, 1);
+        } else {
+          Swal.fire(
+            'Error',
+            `There was an error while deleting your contact. Please try again.`,
+            'error'
+          );
+        }
+      }
     }
   },
   async mounted() {
@@ -75,14 +113,15 @@ export default {
     top: 75px;
     display: flex;
     flex-direction: column;
-
-    > button {
-      background-color: transparent;
-      border: none;
-      font-size: 0.8em;
-      margin: 1px 0;
-    }
   }
+}
+
+.letter-button {
+  background-color: transparent;
+  border: none;
+  font-size: 0.8em;
+  margin: 1px 0;
+  padding: 0;
 }
 
 .contacts-group {
@@ -118,6 +157,10 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  &:hover {
+    background-color: rgba(28, 232, 255, 0.4);
   }
 }
 
