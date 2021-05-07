@@ -8,6 +8,12 @@
       </div>
     </div>
     <div class="no-contacts" v-if="contactsList.length == 0">You have no contacts<br />Add contacts to view it here</div>
+    <div class="button-section">
+      <button>a</button>
+      <button>b</button>
+      <button>c</button>
+      <button>d</button>
+    </div>
   </div>
 </template>
 
@@ -43,9 +49,12 @@ export default {
 
 <style lang="scss" scoped>
 .contacts-list-main {
-  width: 100%;
+  width: calc(100% - 30px);
   max-width: 400px;
   font-size: 0.9em;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 
   > .contacts-group {
     position: relative;
@@ -93,6 +102,14 @@ export default {
 
   > .no-contacts {
     text-align: center;
+  }
+
+  > .button-section {
+    position: fixed;
+    right: 10px;
+    top: 75px;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>
