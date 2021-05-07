@@ -52,11 +52,11 @@ app.get('/generate', generateContacts);
 async function generateContacts(req, res) {
   var result = [];
   let year = Math.ceil(Math.random() * (8) + 2010);
-  let contacts = require(`../files/${year}names.json`);
+  let contactsJson = require(`../files/${year}names.json`);
 
   let indexes = [];
-  for (let i = 0; i < contacts.length; i++) {
-    let rand = Math.random() * contacts.length;
+  for (let i = 0; i < contactsJson.length; i++) {
+    let rand = Math.random() * contactsJson.length;
     indexes.push(Math.floor(rand));
   }
 
@@ -65,12 +65,19 @@ async function generateContacts(req, res) {
   unique.forEach((u) => {
     let phoneRand = Math.random() * (90000000) + 10000000;
 
-    result.push({ name: contacts[u], number: `+601${Math.ceil(phoneRand)}` });
+    result.push({ name: contactsJson[u], number: `+601${Math.ceil(phoneRand)}` });
   });
 
-  console.log(result.length);
+  let mongo = await contacts.getCollection();
+  await mongo.deleteMany();
 
-  res.send(result);
+  let resultDB = await mongo.insertMany(result);
+
+  if (resultDB.insertedCount == result.length) {
+    res.send(`Inserted ${resultDB.insertedCount} contact${resultDB.insertedCount > 1 ? 's' : ''}`);
+  } else {
+    res.send(`Inserted ${resultDB.insertedCount} of ${result.length} contacts`);
+  }
 }
 
 export default app;
