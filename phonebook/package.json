@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "hosted-git-info": "^4.0.2",
     "sass": "^1.32.12",
     "sass-loader": "^10.1.1",
     "vue": "^2.6.11",
