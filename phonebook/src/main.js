@@ -22,7 +22,7 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    { path: '/', component: ContactsList, meta: { title: 'Contacts' } },
+    { path: '/', component: ContactsList, meta: { title: 'Phonebook' } },
     { path: '/new', component: ContactAdd, meta: { title: 'New Contact' } },
   ],
   mode: 'history'
