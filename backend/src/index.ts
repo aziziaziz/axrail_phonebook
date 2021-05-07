@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
   res.send('Yes I did in ts file!');
 });
 
-app.use('/details', contacts);
+app.use('/contacts', contacts);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

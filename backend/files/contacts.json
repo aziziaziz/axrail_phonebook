@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Azizi this is a very long name for testing purposes only to see how it would react with long names",
+    "number": "+60123456789"
+  },
+  {
+    "name": "Bob this is a very long name for testing purposes only",
+    "number": "+6013564654654654654654654654"
+  },
+  {
+    "name": "Bobby",
+    "number": "+6012345678945465 465465456465465465465465465465"
+  },
+  {
+    "name": "Sammy",
+    "number": "+60123456789"
+  },
+  {
+    "name": "Vlad",
+    "number": "+60123456789"
+  }
+]
