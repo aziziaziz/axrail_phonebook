@@ -59,6 +59,10 @@ export default {
   .page-title {
     font-size: 1.3em;
   }
+
+  .app-main .router {
+    align-self: flex-start;
+  }
 }
 </style>
 
