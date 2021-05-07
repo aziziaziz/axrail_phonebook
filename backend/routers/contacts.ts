@@ -39,6 +39,7 @@ async function insertContacts(req, res) {
 app.get('/default', insertDefaultContacts);
 async function insertDefaultContacts(req, res) {
   var mongo = await contacts.getCollection();
+  await mongo.deleteMany();
   var result = await mongo.insertMany(defaultContacts);
 
   if (result.insertedCount == defaultContacts.length) {
