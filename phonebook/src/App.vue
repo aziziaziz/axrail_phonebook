@@ -9,7 +9,7 @@
     </div>
     <router-view class="router"></router-view>
     <div v-if="showSearch" class="search-input">
-      <Input placeholder="Search" :text.sync="search" />
+      <Input placeholder="Search" :text.sync="search" id="searchInput" />
     </div>
   </div>
 </template>
@@ -54,6 +54,10 @@ export default {
     showSearch: function(val) {
       if (!val) {
         this.search = '';
+      } else {
+        this.$nextTick(() => {
+          $('#searchInput').focus();
+        });
       }
     }
   }
@@ -128,5 +132,12 @@ export default {
 body {
   margin: 0;
   font-family: 'Baloo 2', cursive;
+}
+
+button {
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgb(97, 200, 255);
 }
 </style>
