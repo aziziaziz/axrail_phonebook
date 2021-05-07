@@ -4,7 +4,7 @@
       <span class="required-ind" v-if="required">**</span>
       <span>{{ placeholder }}</span>
     </div>
-    <input :class="[ privType == 'password' ? 'password-input' : '' ]" :type="showPass ? 'text' : privType" 
+    <input :id="id" :class="[ privType == 'password' ? 'password-input' : '' ]" :type="showPass ? 'text' : privType" 
       v-model="privText" @focus="inputStateChanged(true)" @blur="inputStateChanged(false)" ref="myInput">
     <div v-if="privText" class="circle-text" :class="[ privType == 'password' ? 'clear-password' : '' ]" @click="clearTextClicked">ｘ</div>
     <button tabindex="-1" v-if="privType == 'password' && privText" class="show-hide-pass" @click="showPassClicked">{{ showPass ? 'Hide' : 'Show' }}</button>
@@ -32,6 +32,7 @@ export default {
     required: { type: Boolean, default: false },
     type: { type: String, default: 'text' },
     errorMessage: { type: String, default: '' },
+    id: { type: String, default: 'myInput' }
   },
   methods: {
     inputStateChanged: function(focus) {
