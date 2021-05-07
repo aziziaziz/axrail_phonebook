@@ -36,6 +36,18 @@ async function insertContacts(req, res) {
   }
 }
 
+app.delete('/', deleteContact);
+async function deleteContact(req, res) {
+  var mongo = await contacts.getCollection();
+  var result = await mongo.deleteOne({ '_id': objID(req.body['_id']) });
+
+  if (result.deletedCount > 0) {
+    res.send({ deleted: true, message: `Deleted ${result.deletedCount} contact`});
+  } else {
+    res.send({ deletede: false, message: `Failed to delete contact. Please try again.`});
+  }
+}
+
 app.get('/default', insertDefaultContacts);
 async function insertDefaultContacts(req, res) {
   var mongo = await contacts.getCollection();
