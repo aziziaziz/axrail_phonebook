@@ -78,6 +78,7 @@ export default {
     }
   },
   async mounted() {
+    this.$store.state.contactsListing = [];
     let contacts = await this.$axios.get('/contacts');
     this.$store.state.rawResult = contacts.data;
 
