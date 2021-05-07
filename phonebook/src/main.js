@@ -5,6 +5,9 @@ import Axios from 'axios'
 import Router from 'vue-router'
 import Vuex from './js/vuex'
 
+import ContactsList from './pages/ContactListPage'
+import ContactAdd from './pages/ContactAddPage'
+
 import Input from './components/MyInput'
 Vue.component('Input', Input)
 
@@ -19,7 +22,8 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    // { path: '/', component: ContactsPage, meta: { title: 'Contacts' } },
+    { path: '/', component: ContactsList, meta: { title: 'Contacts' } },
+    { path: '/new', component: ContactAdd, meta: { title: 'New Contact' } },
   ],
   mode: 'history'
 })
